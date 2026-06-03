@@ -32,9 +32,9 @@ A role-based desktop system where:
 |-------|----------------|
 | ![Login](screenshots/login.png) | ![Dashboard](screenshots/dashboard.png) |
 
-| Families | Duplicate Check Alert |
-|----------|-----------------------|
-| ![Families](screenshots/families.png) | ![Alert](screenshots/duplicate_alert.png) |
+| Families | 
+|----------|
+| ![Families](screenshots/families.png) 
 
 ---
 
