@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.CoordProfileController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="COORDINATOR" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"        onAction="#onNavDashboard"   styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"         onAction="#onNavFamilies"    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distribution" onAction="#onNavDistribution" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👤  My Profile"       styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"  onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"           onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane alignment="CENTER">
+            <VBox spacing="24" maxWidth="560" styleClass="form-card">
+                <padding><Insets top="36" right="40" bottom="36" left="40"/></padding>
+
+                <Label text="👤 My Profile" styleClass="page-title"/>
+
+                <!-- Photo + read-only info -->
+                <HBox spacing="28" alignment="CENTER_LEFT">
+                    <VBox alignment="CENTER" spacing="8">
+                        <ImageView fx:id="imgPhoto" fitWidth="110" fitHeight="110"
+                                   preserveRatio="true" styleClass="photo-preview-lg"/>
+                        <Button text="📷 Change Photo" onAction="#onChoosePhoto"
+                                styleClass="btn-ghost"/>
+                        <Label fx:id="lblPhotoPath" text="No photo"
+                               styleClass="caption-label" wrapText="true" maxWidth="120"/>
+                    </VBox>
+
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <HBox spacing="10">
+                            <Label text="Role:" styleClass="profile-key"/>
+                            <Label fx:id="lblRole" styleClass="profile-val badge-role"/>
+                        </HBox>
+                        <HBox spacing="10">
+                            <Label text="Organization:" styleClass="profile-key"/>
+                            <Label fx:id="lblOrg" styleClass="profile-val" wrapText="true"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+
+                <Separator/>
+
+                <Label text="Edit Your Information" styleClass="section-title"/>
+
+                <VBox spacing="5">
+                    <Label text="Full Name *" styleClass="form-label"/>
+                    <TextField fx:id="txfFullName" styleClass="form-field"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Username (read-only)" styleClass="form-label"/>
+                    <TextField fx:id="txfUsername" styleClass="form-field" editable="false"
+                               style="-fx-opacity:0.65;"/>
+                </VBox>
+                <VBox spacing="5">
+                    <Label text="Email *" styleClass="form-label"/>
+                    <TextField fx:id="txfEmail" styleClass="form-field"/>
+                </VBox>
+
+                <HBox spacing="12">
+                    <Button text="💾 Save Changes" onAction="#onSave"
+                            styleClass="btn-primary" defaultButton="true"/>
+                    <Button text="← Back" onAction="#onBack" styleClass="btn-ghost"/>
+                </HBox>
+
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

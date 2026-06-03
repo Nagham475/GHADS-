@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.OrganizationsController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#onMenuExit"/>
+            </Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <Menu text="Font Family">
+                    <MenuItem text="Segoe UI" onAction="#onFontSegoe"/>
+                    <MenuItem text="Arial"    onAction="#onFontArial"/>
+                    <MenuItem text="Tahoma"   onAction="#onFontTahoma"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About App" onAction="#onAboutApp"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="ADMIN PANEL" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"         onAction="#onNavDashboard" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏢  Organizations"     styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Button text="👥  Users"             onAction="#onNavUsers"   styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"          onAction="#onNavFamilies" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distributions" onAction="#onNavDistributions" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"   onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"            onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <SplitPane dividerPositions="0.38" styleClass="content-split">
+
+            <!-- LEFT: Form -->
+            <VBox spacing="16" styleClass="form-panel">
+                <padding><Insets top="28" right="24" bottom="24" left="28"/></padding>
+
+                <Label text="Organization Management" styleClass="page-title"/>
+                <Label text="Add / Edit Organization" styleClass="section-title"/>
+
+                <VBox spacing="6">
+                    <Label text="Organization Name *" styleClass="form-label"/>
+                    <TextField fx:id="txfName" promptText="e.g. UNRWA Gaza" styleClass="form-field"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Type *" styleClass="form-label"/>
+                    <TextField fx:id="txfType" promptText="e.g. NGO, UN, Local" styleClass="form-field"/>
+                </VBox>
+                <VBox spacing="6">
+                    <Label text="Contact Info *" styleClass="form-label"/>
+                    <TextField fx:id="txfContact" promptText="Phone or email" styleClass="form-field"/>
+                </VBox>
+
+                <Label fx:id="lblStatus" styleClass="status-label"/>
+
+                <HBox spacing="10">
+                    <Button fx:id="btnSave"   text="💾  Save"   onAction="#onSave"   styleClass="btn-primary"/>
+                    <Button fx:id="btnUpdate" text="✏  Update" onAction="#onUpdate" styleClass="btn-warning" disable="true"/>
+                    <Button fx:id="btnDelete" text="🗑  Delete" onAction="#onDelete" styleClass="btn-danger"  disable="true"/>
+                    <Button text="↺  Reset"   onAction="#onClear"   styleClass="btn-ghost"/>
+                </HBox>
+            </VBox>
+
+            <!-- RIGHT: Table -->
+            <VBox spacing="12" VBox.vgrow="ALWAYS">
+                <padding><Insets top="28" right="28" bottom="24" left="12"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="All Organizations" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="⟳ Refresh" onAction="#onRefresh" styleClass="btn-ghost"/>
+                </HBox>
+
+                <TableView fx:id="tblOrgs" VBox.vgrow="ALWAYS" styleClass="data-table">
+                    <columns>
+                        <TableColumn fx:id="colId"      text="#"            prefWidth="50"/>
+                        <TableColumn fx:id="colName"    text="Name"         prefWidth="180"/>
+                        <TableColumn fx:id="colType"    text="Type"         prefWidth="110"/>
+                        <TableColumn fx:id="colContact" text="Contact Info" prefWidth="180"/>
+                    </columns>
+                    <placeholder><Label text="No organizations found." styleClass="table-placeholder"/></placeholder>
+                </TableView>
+
+            </VBox>
+        </SplitPane>
+    </center>
+
+</BorderPane>

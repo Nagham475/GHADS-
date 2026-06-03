@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.FamiliesController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="COORDINATOR" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"        onAction="#onNavDashboard"  styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"         styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distribution" onAction="#onNavDistribution" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👤  My Profile"       onAction="#onNavProfile"    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"  onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"           onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <SplitPane dividerPositions="0.36">
+
+            <!-- LEFT: Form -->
+            <ScrollPane fitToWidth="true">
+                <VBox spacing="13">
+                    <padding><Insets top="28" right="20" bottom="24" left="28"/></padding>
+
+                    <Label text="Family Registration" styleClass="page-title"/>
+                    <Label text="Register New / Edit Family" styleClass="section-title"/>
+
+                    <VBox spacing="5">
+                        <Label text="Household Name *" styleClass="form-label"/>
+                        <TextField fx:id="txfHouseholdName" promptText="Family or household name" styleClass="form-field"/>
+                    </VBox>
+                    <HBox spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Phone *" styleClass="form-label"/>
+                            <TextField fx:id="txfPhone" promptText="05xxxxxxxx" styleClass="form-field"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Family Size *" styleClass="form-label"/>
+                            <TextField fx:id="txfFamilySize" promptText="Number of members" styleClass="form-field"/>
+                        </VBox>
+                    </HBox>
+                    <VBox spacing="5">
+                        <Label text="Location / Camp *" styleClass="form-label"/>
+                        <TextField fx:id="txfLocation" promptText="Area or camp name" styleClass="form-field"/>
+                    </VBox>
+                    <VBox spacing="5">
+                        <Label text="National ID *  (unique)" styleClass="form-label"/>
+                        <TextField fx:id="txfNationalId" promptText="Unique national ID" styleClass="form-field"/>
+                    </VBox>
+                    <HBox spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Vulnerability *" styleClass="form-label"/>
+                            <ComboBox fx:id="cmbVulnerability" maxWidth="Infinity" promptText="Level"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Registration Date *" styleClass="form-label"/>
+                            <DatePicker fx:id="dpRegistrationDate" maxWidth="Infinity"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnSave"   text="💾 Save"   onAction="#onSave"   styleClass="btn-primary"/>
+                        <Button fx:id="btnUpdate" text="✏ Update" onAction="#onUpdate" styleClass="btn-warning" disable="true"/>
+                        <Button text="↺ Reset"   onAction="#onClear"   styleClass="btn-ghost"/>
+                    </HBox>
+
+                    <!-- Hide delete button for coordinator — rendered invisible in controller -->
+                    <Button fx:id="btnDelete" text="🗑 Delete" onAction="#onDelete"
+                            styleClass="btn-danger" visible="false" managed="false"/>
+                </VBox>
+            </ScrollPane>
+
+            <!-- RIGHT: Table -->
+            <VBox spacing="10">
+                <padding><Insets top="28" right="28" bottom="24" left="12"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Family List" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="⬆ HIGH only"  onAction="#onFilterHighVuln" styleClass="btn-danger-ghost"/>
+                    <Button text="✘ Unserved"   onAction="#onFilterUnserved" styleClass="btn-warning-ghost"/>
+                    <Button text="All"           onAction="#onFilterAll"      styleClass="btn-ghost"/>
+                    <Button text="⟳"            onAction="#onRefresh"        styleClass="btn-ghost"/>
+                </HBox>
+
+                <Label fx:id="lblCount" styleClass="caption-label"/>
+
+                <TableView fx:id="tblFamilies" VBox.vgrow="ALWAYS" styleClass="data-table">
+                    <columns>
+                        <TableColumn fx:id="colId"         text="#"             prefWidth="40"/>
+                        <TableColumn fx:id="colName"       text="Household"     prefWidth="150"/>
+                        <TableColumn fx:id="colNationalId" text="National ID"   prefWidth="110"/>
+                        <TableColumn fx:id="colLocation"   text="Location"      prefWidth="110"/>
+                        <TableColumn fx:id="colSize"       text="Size"          prefWidth="50"/>
+                        <TableColumn fx:id="colVuln"       text="Vulnerability" prefWidth="105"/>
+                        <TableColumn fx:id="colLastAid"    text="Last Aid"      prefWidth="100"/>
+                        <TableColumn fx:id="colStatus"     text="Status"        prefWidth="85"/>
+                    </columns>
+                    <placeholder><Label text="No families registered yet." styleClass="table-placeholder"/></placeholder>
+                </TableView>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

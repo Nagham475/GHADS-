@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ghads.controller.LoginController"
+           styleClass="login-root"
+           stylesheets="@../css/style.css">
+
+    <VBox alignment="CENTER" spacing="0" maxWidth="420"
+          styleClass="login-card">
+
+        <!-- Logo / Header -->
+        <VBox alignment="CENTER" spacing="8" styleClass="login-header">
+            <padding><Insets top="36" right="36" bottom="24" left="36"/></padding>
+            <Label text="🌿" styleClass="login-icon"/>
+            <Label text="GHADS" styleClass="login-title"/>
+            <Label text="Gaza Humanitarian Aid Distribution System"
+                   styleClass="login-subtitle" wrapText="true" textAlignment="CENTER"/>
+        </VBox>
+
+        <!-- Form -->
+        <VBox spacing="16" styleClass="login-form">
+            <padding><Insets top="8" right="36" bottom="8" left="36"/></padding>
+
+            <VBox spacing="6">
+                <Label text="Username" styleClass="form-label"/>
+                <TextField fx:id="txfUsername" promptText="Enter your username"
+                           styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Password" styleClass="form-label"/>
+                <PasswordField fx:id="txfPassword" promptText="Enter your password"
+                               styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+
+            <Label fx:id="lblError" styleClass="error-label" wrapText="true"
+                   managed="false" visible="false"/>
+
+            <VBox spacing="10">
+                <padding><Insets top="8"/></padding>
+                <Button text="Login" onAction="#onLogin"
+                        styleClass="btn-primary" maxWidth="Infinity"
+                        defaultButton="true"/>
+                <Button text="Clear" onAction="#onClear"
+                        styleClass="btn-secondary" maxWidth="Infinity"/>
+            </VBox>
+        </VBox>
+
+        <!-- Footer -->
+        <Label text="The Islamic University of Gaza  ·  CSCI 2108  ·  2026"
+               styleClass="login-footer"/>
+        <VBox><padding><Insets bottom="28"/></padding></VBox>
+
+    </VBox>
+</StackPane>

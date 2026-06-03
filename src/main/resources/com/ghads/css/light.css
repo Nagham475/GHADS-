@@ -1,0 +1,90 @@
+/* ================================================================
+   GHADS – Light Theme  (light.css)
+   Restores default light-mode tokens after a dark switch.
+   ================================================================ */
+
+.root {
+    --bg-app:               #f1f5f9;
+    --bg-card:              #ffffff;
+    --bg-sidebar:           #1e293b;
+    --bg-sidebar-hover:     #334155;
+    --bg-table-header:      #f8fafc;
+    --bg-table-row-alt:     #f8fafc;
+    --bg-table-row-hover:   #e8f4fd;
+    --bg-sidebar-active:    #1a73e8;
+
+    --text-primary:         #0f172a;
+    --text-secondary:       #475569;
+    --text-muted:           #94a3b8;
+    --text-sidebar:         #cbd5e1;
+    --text-sidebar-active:  #ffffff;
+
+    --border-light:         #e2e8f0;
+    --border-card:          #e2e8f0;
+    --border-input:         #cbd5e1;
+    --border-input-focus:   #1a73e8;
+
+    --ghads-primary-light:  #e8f0fe;
+
+    -fx-background-color: var(--bg-app);
+}
+
+.login-card   { -fx-background-color: #ffffff; }
+.login-form   { -fx-background-color: #ffffff; }
+.form-card    { -fx-background-color: #ffffff; }
+.form-panel   { -fx-background-color: #ffffff; }
+.form-panel-scroll > .viewport { -fx-background-color: #ffffff; }
+
+.form-field {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #0f172a;
+    -fx-border-color: #cbd5e1;
+}
+.form-field:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1a73e8;
+}
+.text-area.form-field   { -fx-background-color: #f1f5f9; }
+.text-area .content     { -fx-background-color: #f1f5f9; }
+
+.stat-card   { -fx-background-color: #ffffff; }
+.action-card { -fx-background-color: #ffffff; }
+.action-title { -fx-text-fill: #0f172a; }
+.data-table  { -fx-background-color: #ffffff; -fx-border-color: #e2e8f0; }
+.data-table .table-row-cell { -fx-background-color: #ffffff; }
+.data-table .table-row-cell:odd { -fx-background-color: #f8fafc; }
+.data-table .table-row-cell:hover { -fx-background-color: #e8f4fd; }
+.data-table .table-row-cell:selected { -fx-background-color: #e8f0fe; }
+.data-table .table-cell { -fx-text-fill: #0f172a; }
+
+.info-box {
+    -fx-background-color: #eff6ff;
+    -fx-border-color: #bfdbfe;
+}
+.info-box-title { -fx-text-fill: #1e40af; }
+.error-label { -fx-background-color: #fff5f5; -fx-border-color: #fecaca; }
+.family-info-label { -fx-background-color: #e8f0fe; -fx-text-fill: #1a73e8; }
+.badge-role { -fx-background-color: #e8f0fe; -fx-text-fill: #1a73e8; }
+.filter-bar { -fx-background-color: #ffffff; -fx-border-color: #e2e8f0; }
+
+.combo-box { -fx-background-color: #f1f5f9; -fx-border-color: #cbd5e1; }
+.combo-box .list-cell { -fx-text-fill: #0f172a; -fx-background-color: #f1f5f9; }
+.date-picker { -fx-background-color: #f1f5f9; -fx-border-color: #cbd5e1; }
+.date-picker .text-field { -fx-text-fill: #0f172a; }
+
+.context-menu { -fx-background-color: #ffffff; -fx-border-color: #e2e8f0; }
+.menu-item .label { -fx-text-fill: #0f172a; }
+.menu-item:hover  { -fx-background-color: #e8f0fe; }
+.separator .line  { -fx-border-color: #e2e8f0; }
+.custom-dialog    { -fx-background-color: #ffffff; }
+.custom-dialog .content.label { -fx-text-fill: #0f172a; }
+
+.btn-ghost {
+    -fx-text-fill: #475569;
+    -fx-border-color: #cbd5e1;
+}
+.btn-ghost:hover {
+    -fx-background-color: #e8f0fe;
+    -fx-text-fill: #1a73e8;
+    -fx-border-color: #1a73e8;
+}

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.CoordDashboardController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <Menu text="Font Family">
+                    <MenuItem text="Segoe UI" onAction="#onFontSegoe"/>
+                    <MenuItem text="Arial"    onAction="#onFontArial"/>
+                    <MenuItem text="Tahoma"   onAction="#onFontTahoma"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+
+            <Label text="COORDINATOR" styleClass="sidebar-header"/>
+            <Label fx:id="lblOrgName" styleClass="sidebar-org" wrapText="true"/>
+            <Separator styleClass="sidebar-sep"/>
+
+            <Button text="🏠  Dashboard"    styleClass="sidebar-btn,active"       maxWidth="Infinity"/>
+            <Button text="🏠  Families"     onAction="#onNavFamilies"   styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distribution" onAction="#onNavDistribution" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👤  My Profile"   onAction="#onNavProfile"    styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password" onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"          onAction="#onLogout"            styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label fx:id="lblWelcome" styleClass="sidebar-user" wrapText="true"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="24">
+                <padding><Insets top="28" right="32" bottom="28" left="32"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <Label text="Coordinator Dashboard" styleClass="page-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="⟳ Refresh" onAction="#onRefresh" styleClass="btn-ghost"/>
+                </HBox>
+
+                <!-- Stats -->
+                <Label text="Organization Statistics" styleClass="section-title"/>
+                <HBox spacing="20">
+                    <VBox styleClass="stat-card,card-purple" HBox.hgrow="ALWAYS">
+                        <Label text="Total Families" styleClass="stat-label"/>
+                        <Label fx:id="lblTotalFamilies" text="0" styleClass="stat-value"/>
+                        <Label text="In the system" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-teal" HBox.hgrow="ALWAYS">
+                        <Label text="Served by My Org" styleClass="stat-label"/>
+                        <Label fx:id="lblServedByOrg" text="0" styleClass="stat-value"/>
+                        <Label text="Families we helped" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-red" HBox.hgrow="ALWAYS">
+                        <Label text="Unserved Families" styleClass="stat-label"/>
+                        <Label fx:id="lblUnservedFamilies" text="0" styleClass="stat-value"/>
+                        <Label text="Need assistance" styleClass="stat-sub"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Quick actions -->
+                <Label text="Quick Actions" styleClass="section-title"/>
+                <HBox spacing="16">
+                    <VBox styleClass="action-card" onMouseClicked="#onNavFamilies" HBox.hgrow="ALWAYS">
+                        <Label text="🏠" styleClass="action-icon"/>
+                        <Label text="Register Family" styleClass="action-title"/>
+                        <Label text="Add a new displaced family" styleClass="action-sub"/>
+                    </VBox>
+                    <VBox styleClass="action-card" onMouseClicked="#onNavDistribution" HBox.hgrow="ALWAYS">
+                        <Label text="📦" styleClass="action-icon"/>
+                        <Label text="Record Aid" styleClass="action-title"/>
+                        <Label text="Distribute aid with duplicate check" styleClass="action-sub"/>
+                    </VBox>
+                    <VBox styleClass="action-card" onMouseClicked="#onNavProfile" HBox.hgrow="ALWAYS">
+                        <Label text="👤" styleClass="action-icon"/>
+                        <Label text="My Profile" styleClass="action-title"/>
+                        <Label text="View and edit your profile" styleClass="action-sub"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

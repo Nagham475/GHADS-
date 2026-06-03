@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.AdminDashboardController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <!-- ═══════════════════ MENU BAR ═══════════════════ -->
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#onMenuExit">
+                    <graphic><Label text="⏻" styleClass="menu-icon"/></graphic>
+                </MenuItem>
+            </Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small (11px)"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium (13px)" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large (16px)"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <Menu text="Font Family">
+                    <MenuItem text="Segoe UI"   onAction="#onFontSegoe"/>
+                    <MenuItem text="Arial"      onAction="#onFontArial"/>
+                    <MenuItem text="Tahoma"     onAction="#onFontTahoma"/>
+                    <MenuItem text="Courier New" onAction="#onFontCourier"/>
+                </Menu>
+                <SeparatorMenuItem/>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About App" onAction="#onAboutApp">
+                    <graphic><Label text="ℹ" styleClass="menu-icon"/></graphic>
+                </MenuItem>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+
+            <Label text="ADMIN PANEL" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+
+            <Button text="🏠  Dashboard"      onAction="#onNavDashboard"  styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Button text="🏢  Organizations"  onAction="#onNavOrganizations" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👥  Users"          onAction="#onNavUsers"      styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"       onAction="#onNavFamilies"   styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distributions" onAction="#onNavDistributions" styleClass="sidebar-btn" maxWidth="Infinity"/>
+
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password" onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"          onAction="#onLogout"            styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label fx:id="lblWelcome" styleClass="sidebar-user" wrapText="true"/>
+        </VBox>
+    </left>
+
+    <!-- ═══════════════════ MAIN CONTENT ═══════════════════ -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll">
+            <VBox spacing="24">
+                <padding><Insets top="28" right="32" bottom="28" left="32"/></padding>
+
+                <!-- Page header -->
+                <HBox alignment="CENTER_LEFT" spacing="16">
+                    <Label text="Admin Dashboard" styleClass="page-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="⟳  Refresh" onAction="#onRefresh" styleClass="btn-ghost"/>
+                </HBox>
+
+                <!-- Statistics cards -->
+                <Label text="System Overview" styleClass="section-title"/>
+                <HBox spacing="16">
+                    <VBox styleClass="stat-card,card-blue" HBox.hgrow="ALWAYS">
+                        <Label text="Organizations" styleClass="stat-label"/>
+                        <Label fx:id="lblTotalOrgs" text="0" styleClass="stat-value"/>
+                        <Label text="Active NGOs &amp; UN bodies" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-green" HBox.hgrow="ALWAYS">
+                        <Label text="Coordinators" styleClass="stat-label"/>
+                        <Label fx:id="lblTotalUsers" text="0" styleClass="stat-value"/>
+                        <Label text="Registered users" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-purple" HBox.hgrow="ALWAYS">
+                        <Label text="Total Families" styleClass="stat-label"/>
+                        <Label fx:id="lblTotalFamilies" text="0" styleClass="stat-value"/>
+                        <Label text="Registered in system" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-teal" HBox.hgrow="ALWAYS">
+                        <Label text="Families Served" styleClass="stat-label"/>
+                        <Label fx:id="lblServedFamilies" text="0" styleClass="stat-value"/>
+                        <Label text="Received at least 1 aid" styleClass="stat-sub"/>
+                    </VBox>
+                    <VBox styleClass="stat-card,card-red" HBox.hgrow="ALWAYS">
+                        <Label text="Unserved Families" styleClass="stat-label"/>
+                        <Label fx:id="lblUnservedFamilies" text="0" styleClass="stat-value"/>
+                        <Label text="No aid received yet" styleClass="stat-sub"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Recent distributions -->
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Recent Aid Distributions" styleClass="section-title"/>
+                </HBox>
+                <TableView fx:id="tblRecent" styleClass="data-table">
+                    <columns>
+                        <TableColumn fx:id="colFamily"  text="Family"       prefWidth="180"/>
+                        <TableColumn fx:id="colOrg"     text="Organization" prefWidth="160"/>
+                        <TableColumn fx:id="colAidType" text="Aid Type"     prefWidth="120"/>
+                        <TableColumn fx:id="colVuln"    text="Vulnerability" prefWidth="110"/>
+                        <TableColumn fx:id="colDate"    text="Date"         prefWidth="120"/>
+                    </columns>
+                    <placeholder><Label text="No distributions recorded yet." styleClass="table-placeholder"/></placeholder>
+                </TableView>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.DistributionsController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="COORDINATOR" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"        onAction="#onNavDashboard"   styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"         onAction="#onNavFamilies"    styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distribution" styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Button text="👤  My Profile"       onAction="#onNavProfile"     styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"  onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"           onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <SplitPane dividerPositions="0.36">
+
+            <!-- LEFT: New distribution form -->
+            <VBox spacing="16">
+                <padding><Insets top="28" right="20" bottom="24" left="28"/></padding>
+
+                <Label text="Aid Distribution" styleClass="page-title"/>
+
+                <!-- Duplicate check rule reminder -->
+                <VBox styleClass="info-box" spacing="6">
+                    <Label text="ℹ  Duplicate Check Rule" styleClass="info-box-title"/>
+                    <Label text="HIGH vulnerability → Always allowed" styleClass="info-high"/>
+                    <Label text="MEDIUM / LOW → Rejected if same aid type given within 30 days"
+                           styleClass="info-medium" wrapText="true"/>
+                </VBox>
+
+                <Label text="Record New Distribution" styleClass="section-title"/>
+
+                <VBox spacing="5">
+                    <Label text="Select Family *  (sorted: HIGH first)" styleClass="form-label"/>
+                    <ComboBox fx:id="cmbFamily" maxWidth="Infinity"
+                              promptText="Search and select family…"/>
+                </VBox>
+
+                <Label fx:id="lblFamilyInfo" styleClass="family-info-label" wrapText="true"/>
+
+                <VBox spacing="5">
+                    <Label text="Aid Type *" styleClass="form-label"/>
+                    <ComboBox fx:id="cmbAidType" maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Distribution Date *" styleClass="form-label"/>
+                    <DatePicker fx:id="dpDistDate" maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="5">
+                    <Label text="Notes (optional)" styleClass="form-label"/>
+                    <TextArea fx:id="txaNote" promptText="Any relevant notes…"
+                              prefRowCount="3" styleClass="form-field"/>
+                </VBox>
+
+                <HBox spacing="10">
+                    <Button fx:id="btnSave" text="📦 Record Distribution"
+                            onAction="#onSave" styleClass="btn-primary"/>
+                    <Button text="↺ Clear" onAction="#onClear" styleClass="btn-ghost"/>
+                </HBox>
+            </VBox>
+
+            <!-- RIGHT: Table of existing distributions -->
+            <VBox spacing="12">
+                <padding><Insets top="28" right="28" bottom="24" left="12"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="My Organization's Distributions" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="btnFilterHigh"     text="⬆ HIGH families"   onAction="#onFilterHighVuln" styleClass="btn-danger-ghost"/>
+                    <Button fx:id="btnFilterUnserved" text="✘ Unserved"        onAction="#onFilterUnserved" styleClass="btn-warning-ghost"/>
+                    <Button text="All" onAction="#onShowAll" styleClass="btn-ghost"/>
+                    <Button text="⟳"  onAction="#onRefresh" styleClass="btn-ghost"/>
+                </HBox>
+
+                <Label fx:id="lblCount" styleClass="caption-label"/>
+
+                <TableView fx:id="tblDist" VBox.vgrow="ALWAYS" styleClass="data-table">
+                    <columns>
+                        <TableColumn fx:id="colId"      text="#"             prefWidth="40"/>
+                        <TableColumn fx:id="colFamily"  text="Family"        prefWidth="150"/>
+                        <TableColumn fx:id="colCoord"   text="Coordinator"   prefWidth="130"/>
+                        <TableColumn fx:id="colAidType" text="Aid Type"      prefWidth="100"/>
+                        <TableColumn fx:id="colVuln"    text="Vulnerability" prefWidth="105"/>
+                        <TableColumn fx:id="colDate"    text="Date"          prefWidth="100"/>
+                    </columns>
+                    <placeholder>
+                        <Label text="No distributions recorded for your organization."
+                               styleClass="table-placeholder"/>
+                    </placeholder>
+                </TableView>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

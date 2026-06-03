@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.DistributionsController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <Menu text="Font Family">
+                    <MenuItem text="Segoe UI" onAction="#onFontSegoe"/>
+                    <MenuItem text="Arial"    onAction="#onFontArial"/>
+                    <MenuItem text="Tahoma"   onAction="#onFontTahoma"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="ADMIN PANEL" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"         onAction="#onNavDashboard" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏢  Organizations"     onAction="#onNavOrganizations" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👥  Users"             onAction="#onNavUsers" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏠  Families"          onAction="#onNavFamilies" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distributions" styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"   onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"            onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="16">
+            <padding><Insets top="28" right="32" bottom="24" left="28"/></padding>
+
+            <Label text="Aid Distributions" styleClass="page-title"/>
+
+            <!-- Search / filter bar -->
+            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="filter-bar">
+                <Label text="Filter by Organization:" styleClass="form-label"/>
+                <ComboBox fx:id="cmbFilterOrg" prefWidth="220" promptText="Select organization"/>
+                <Button fx:id="btnSearchByOrg" text="🔍 Search" onAction="#onSearchByOrg" styleClass="btn-primary"/>
+                <Button fx:id="btnShowAll"      text="Show All"  onAction="#onShowAll"      styleClass="btn-ghost"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="⟳ Refresh" onAction="#onRefresh" styleClass="btn-ghost"/>
+            </HBox>
+
+            <Label fx:id="lblCount" styleClass="caption-label"/>
+
+            <TableView fx:id="tblDist" VBox.vgrow="ALWAYS" styleClass="data-table">
+                <columns>
+                    <TableColumn fx:id="colId"      text="#"             prefWidth="50"/>
+                    <TableColumn fx:id="colFamily"  text="Family"        prefWidth="160"/>
+                    <TableColumn fx:id="colOrg"     text="Organization"  prefWidth="150"/>
+                    <TableColumn fx:id="colCoord"   text="Coordinator"   prefWidth="140"/>
+                    <TableColumn fx:id="colAidType" text="Aid Type"      prefWidth="110"/>
+                    <TableColumn fx:id="colVuln"    text="Vulnerability" prefWidth="110"/>
+                    <TableColumn fx:id="colDate"    text="Date"          prefWidth="110"/>
+                </columns>
+                <placeholder>
+                    <Label text="No aid distributions found. Use the filter above or click Refresh."
+                           styleClass="table-placeholder"/>
+                </placeholder>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

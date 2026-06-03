@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ghads.controller.UsersController"
+            styleClass="main-root"
+            stylesheets="@../../css/style.css">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File"><MenuItem text="Exit" onAction="#onMenuExit"/></Menu>
+            <Menu text="Format">
+                <Menu text="Font Size">
+                    <MenuItem text="Small"  onAction="#onFontSizeSmall"/>
+                    <MenuItem text="Medium" onAction="#onFontSizeMedium"/>
+                    <MenuItem text="Large"  onAction="#onFontSizeLarge"/>
+                </Menu>
+                <Menu text="Font Family">
+                    <MenuItem text="Segoe UI" onAction="#onFontSegoe"/>
+                    <MenuItem text="Arial"    onAction="#onFontArial"/>
+                    <MenuItem text="Tahoma"   onAction="#onFontTahoma"/>
+                </Menu>
+                <MenuItem text="Light Theme" onAction="#onLightTheme"/>
+                <MenuItem text="Dark Theme"  onAction="#onDarkTheme"/>
+            </Menu>
+            <Menu text="Help"><MenuItem text="About App" onAction="#onAboutApp"/></Menu>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox styleClass="sidebar" spacing="4" minWidth="200" maxWidth="200">
+            <padding><Insets top="24" right="12" bottom="24" left="12"/></padding>
+            <Label text="ADMIN PANEL" styleClass="sidebar-header"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🏠  Dashboard"         onAction="#onNavDashboard" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🏢  Organizations"     onAction="#onNavOrganizations" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="👥  Users"             styleClass="sidebar-btn,active" maxWidth="Infinity"/>
+            <Button text="🏠  Families"          onAction="#onNavFamilies" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="📦  Aid Distributions" onAction="#onNavDistributions" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Separator styleClass="sidebar-sep"/>
+            <Button text="🔑  Change Password"   onAction="#onNavChangePassword" styleClass="sidebar-btn" maxWidth="Infinity"/>
+            <Button text="🚪  Logout"            onAction="#onLogout" styleClass="sidebar-btn,sidebar-logout" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <center>
+        <SplitPane dividerPositions="0.40">
+
+            <!-- LEFT: Form -->
+            <ScrollPane fitToWidth="true" styleClass="form-panel-scroll">
+                <VBox spacing="14">
+                    <padding><Insets top="28" right="24" bottom="24" left="28"/></padding>
+
+                    <Label text="User Management" styleClass="page-title"/>
+                    <Label text="Add / Edit Coordinator Account" styleClass="section-title"/>
+
+                    <!-- Photo section -->
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <VBox alignment="CENTER" spacing="8">
+                            <ImageView fx:id="imgPhoto" fitWidth="90" fitHeight="90"
+                                       preserveRatio="true" styleClass="photo-preview"/>
+                            <Button text="📷 Choose Photo" onAction="#onChoosePhoto"
+                                    styleClass="btn-ghost"/>
+                            <Label fx:id="lblPhotoPath" text="No photo selected"
+                                   styleClass="caption-label" wrapText="true" maxWidth="120"/>
+                        </VBox>
+
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <VBox spacing="5">
+                                <Label text="Full Name *" styleClass="form-label"/>
+                                <TextField fx:id="txfFullName" promptText="Full name" styleClass="form-field"/>
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Username *" styleClass="form-label"/>
+                                <TextField fx:id="txfUsername" promptText="Unique username" styleClass="form-field"/>
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <VBox spacing="5">
+                        <Label text="Password * (min 8 chars)" styleClass="form-label"/>
+                        <PasswordField fx:id="txfPassword" promptText="Leave blank to keep existing" styleClass="form-field"/>
+                    </VBox>
+                    <VBox spacing="5">
+                        <Label text="Email *" styleClass="form-label"/>
+                        <TextField fx:id="txfEmail" promptText="email@example.com" styleClass="form-field"/>
+                    </VBox>
+                    <HBox spacing="12">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Role *" styleClass="form-label"/>
+                            <ComboBox fx:id="cmbRole" maxWidth="Infinity"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="Organization" styleClass="form-label"/>
+                            <ComboBox fx:id="cmbOrg" maxWidth="Infinity"/>
+                        </VBox>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Button fx:id="btnSave"   text="💾 Save"   onAction="#onSave"   styleClass="btn-primary"/>
+                        <Button fx:id="btnUpdate" text="✏ Update" onAction="#onUpdate" styleClass="btn-warning" disable="true"/>
+                        <Button fx:id="btnDelete" text="🗑 Delete" onAction="#onDelete" styleClass="btn-danger"  disable="true"/>
+                        <Button text="↺ Reset"   onAction="#onClear"   styleClass="btn-ghost"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+
+            <!-- RIGHT: Table -->
+            <VBox spacing="12">
+                <padding><Insets top="28" right="28" bottom="24" left="12"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="All Users" styleClass="section-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="⟳ Refresh" onAction="#onRefresh" styleClass="btn-ghost"/>
+                </HBox>
+
+                <TableView fx:id="tblUsers" VBox.vgrow="ALWAYS" styleClass="data-table">
+                    <columns>
+                        <TableColumn fx:id="colId"       text="#"           prefWidth="45"/>
+                        <TableColumn fx:id="colFullName" text="Full Name"   prefWidth="150"/>
+                        <TableColumn fx:id="colUsername" text="Username"    prefWidth="120"/>
+                        <TableColumn fx:id="colEmail"    text="Email"       prefWidth="160"/>
+                        <TableColumn fx:id="colRole"     text="Role"        prefWidth="100"/>
+                        <TableColumn fx:id="colOrg"      text="Organization" prefWidth="140"/>
+                    </columns>
+                    <placeholder><Label text="No users found." styleClass="table-placeholder"/></placeholder>
+                </TableView>
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>
